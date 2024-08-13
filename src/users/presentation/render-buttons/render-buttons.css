@@ -1,0 +1,15 @@
+
+
+button {
+    padding: 5px;
+    margin: 30px;
+    background-color: rgb(16, 93, 156);
+    color: aliceblue;
+}
+
+#current-page {
+    padding: 5px;
+    margin: 10px;
+    background-color: rgb(16, 93, 156);
+    border-radius: 5px;
+}

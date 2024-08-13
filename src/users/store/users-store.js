@@ -1,18 +1,28 @@
+import { User } from "../models/user";
 import { loadUsersByPage } from "../use-cases/load-users-by-page";
 
 
 const state = {
     currentPage: 0,
-    user: [],
+    users: [],
 
 }
 
 const loadNextPage = async() => {
-    await loadUsersByPage( state.currentPage + 1 );
+    const users = await loadUsersByPage( state.currentPage + 1 );
+    if ( users.length === 0 ) return;
+
+    state.currentPage += 1;
+    state.users = users;
 }
 
 const loadPreviousPage = async() => {
-    throw new Error('Not implemented');
+    if ( state.currentPage === 1 ) return;
+    const users = await loadUsersByPage( state.currentPage - 1 );
+    
+    state.currentPage -= 1;
+    state.users = users;
+    
 }
 
 
@@ -31,6 +41,16 @@ export default {
     onUserChanged,
     reloadPage,
 
-    getUser: () => [ ...state ],
+
+    /**
+     * 
+     * @returns {User[]}
+     */
+    getUsers: () => [ ...state.users ],
+
+     /**
+     * 
+     * @returns {Number}
+     */
     getCurrentPage: () => state.currentPage,
 }
